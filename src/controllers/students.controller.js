@@ -17,7 +17,7 @@ export const create = async (req, res) => {
 }
 
 export const deleteById = async (req, res) => {
-    const {id} = req.params;
+    const { id } = req.params;
 
     await Student.findByIdAndDelete(id);
 
@@ -25,7 +25,11 @@ export const deleteById = async (req, res) => {
 }
 
 export const getWithCourse = async (id) => {
-    const students = await Student.find().where(`this.participations.course =${id}`);
+    const students = await Student.find()
+        .$where(function(){
+            return false
+            // return this.participations? this.participations.course === id : false;
+        });
 
     return students;
 }
