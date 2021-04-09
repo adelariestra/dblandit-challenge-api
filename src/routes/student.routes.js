@@ -1,11 +1,8 @@
 import { Router } from "express";
+import * as studentsController from '../controllers/students.controller'
+
 const router = Router();
 
-router.get("/",(req,res)=>{
-    res.json([{
-        name:"manolo",
-        lname:"sanchez"
-    }])
-})
+router.get("/",studentsController.get);
 
 export default router;
