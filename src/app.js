@@ -4,6 +4,7 @@ import morgan from 'morgan'
 import pkg from '../package.json'
 
 import studentRoutes from './routes/student.routes'
+import courseRoutes from './routes/course.routes'
 
 const app = express();
 
@@ -28,5 +29,6 @@ app.get('/', (req,res)=>{
 })
 
 app.use("/students", studentRoutes);
+app.use("/courses", courseRoutes);
 
 export default app;

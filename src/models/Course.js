@@ -3,8 +3,8 @@ import { Schema, model } from 'mongoose'
 const courseSchema = new Schema(
     {
         theme: String,
-        year: String,
-        duration: String
+        year: Number,
+        duration: Number
     },
     {
         timestamps: true,
