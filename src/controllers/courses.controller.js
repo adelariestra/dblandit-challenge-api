@@ -1,7 +1,8 @@
 import Course from '../models/Course'
 
 export const get = async (req, res) => {
-    const courses = await Course.find().select('theme year');
+    const courses = await Course.find(req.query)
+    .select('theme year');
 
     res.status(200).json(courses)
 }
@@ -18,7 +19,7 @@ export const create = async (req, res) => {
 }
 
 export const deleteById = async (req, res) => {
-    const {id} = req.params;
+    const { id } = req.params;
 
     await Course.findByIdAndDelete(id);
 
