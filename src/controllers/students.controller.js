@@ -23,3 +23,9 @@ export const deleteById = async (req, res) => {
 
     res.status(200).json()
 }
+
+export const getWithCourse = async (id) => {
+    const students = await Student.find().where(`this.participations.course =${id}`);
+
+    return students;
+}
