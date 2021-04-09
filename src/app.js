@@ -11,16 +11,19 @@ const app = express();
 app.set("pkg", pkg);
 app.set("port", process.env.PORT || 4000);
 
-// Set Up
-app.use(morgan('dev'));
+// Middlewares
+app.use(express.json()); // detect json bodies
+app.use(morgan('dev')); // to show req on console
 
 // Routes
 app.get('/', (req,res)=>{
+    const {name, description, version, author} = app.get("pkg");
+
     res.json({
-        name: app.get("pkg").name,
-        description: app.get("pkg").description,
-        version: app.get("pkg").version,
-        author: app.get("pkg").author
+        name: name,
+        description: description,
+        version: version,
+        author: author
     });
 })
 
