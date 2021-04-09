@@ -5,5 +5,6 @@ const router = Router();
 
 router.get("/",studentController.get);
 router.post("/",studentController.create);
+router.delete("/:id",studentController.deleteById);
 
 export default router;
