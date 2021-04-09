@@ -1,7 +1,7 @@
 {
   "name": "dblandit-challenge-api",
   "version": "1.0.0",
-  "description": "",
+  "description": "REST API para el challenge técnico de ingreso a dblandit.",
   "main": "index.js",
   "scripts": {
     "dev": "nodemon src/index.js --exec babel-node",
@@ -14,7 +14,7 @@
     "url": "git+https://github.com/adelariestra/dblandit-challenge-api.git"
   },
   "keywords": [],
-  "author": "",
+  "author": "Arturo De la Riestra",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/adelariestra/dblandit-challenge-api/issues"
