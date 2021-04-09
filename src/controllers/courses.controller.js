@@ -1,9 +1,9 @@
 import Course from '../models/Course'
 
 export const get = async (req, res) => {
-    const Courses = await Course.find();
+    const courses = await Course.find().select('theme year');
 
-    res.status(200).json(Courses)
+    res.status(200).json(courses)
 }
 
 export const create = async (req, res) => {
