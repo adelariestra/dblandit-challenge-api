@@ -1,0 +1,75 @@
+{
+	"info": {
+		"_postman_id": "1eee1cf7-86f9-45ba-a821-f90962e57530",
+		"name": "dblandIt-challenge-api",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Students",
+			"item": [
+				{
+					"name": "get",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:4000/students",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"students"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"fname\":\"Arturo\",\r\n    \"lname\":\"De la Riestra\",\r\n    \"dni\":41780699,\r\n    \"address\":\"Psherman Calle Wallaby 42 sidney\"\r\n}"
+						},
+						"url": {
+							"raw": "localhost:4000/students",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"students"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
