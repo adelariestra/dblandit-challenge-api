@@ -1,5 +1,4 @@
 import Course from '../models/Course'
-import { getWithCourse } from './students.controller'
 
 export const get = async (req, res) => {
     const courses = await Course.find(req.query)
@@ -42,7 +41,15 @@ export const addStudent = async (req, res) => {
         { $push: { students: { student, score } } }
     )
 
-    courseFound.save();
+    await courseFound.save(
+        Course.find({})
+            .populate(
+                {
+                    path: 'students.student',
+                    model: 'Student'
+                })
+            .exec()
+    );
 
     res.status(200).json(courseFound);
 }
