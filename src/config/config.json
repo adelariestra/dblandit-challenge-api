@@ -1,0 +1,4 @@
+{
+    "DB_DEV_URI": "mongodb://localhost/dblanditdb",
+    "DB_TEST_URI": "mongodb://localhost/dblanditdb_test"
+}

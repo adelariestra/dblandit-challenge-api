@@ -4,10 +4,10 @@
   "description": "REST API para el challenge técnico de ingreso a dblandit.",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon src/index.js --exec babel-node",
+    "dev": "SET NODE_ENV=dev && nodemon src/index.js --exec babel-node",
     "build": "babel src --out-dir build",
     "start": "node build/index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "SET NODE_ENV=test && nodemon src/index.js --exec babel-node"
   },
   "repository": {
     "type": "git",
