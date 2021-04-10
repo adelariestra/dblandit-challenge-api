@@ -9,13 +9,7 @@ export const get = async (req, res) => {
 
 export const getById = async (req, res) => {
     const { id } = req.params;
-    var course = await Course
-        .findById(id)
-        .select('theme year duration students')
-        .populate('students.student'
-            , 'fname lname dni address').exec();
-
-    course = course.toObject();
+    var course = await getCourseWithStudents(id);
 
     res.status(200).json(course)
 }
@@ -64,19 +58,40 @@ export const removeStudent = async (req, res) => {
 
     res.status(204).json(courseFound);
 }
+
 export const getStudents = async (req, res) => {
     const { id } = req.params;
 
-    const courseFound = await Course
-        .findById(id)
-        .populate('students.student', 'fname lname dni address')
-        .exec();
+    const courseFound = await getCourseWithStudents(id);
 
-    const students = courseFound.toObject()
+    const students = courseFound
         .students
         .map(student => student.student);
 
     console.log(students);
 
     res.status(200).json(students);
+}
+
+const getCourseWithStudents = async (id) => {
+    const course = await Course
+        .findById(id)
+        .populate('students.student', 'fname lname dni address')
+        .exec();
+
+    return course.toObject();
+}
+
+export const getBestStudent = async (req, res) => {
+    const { id } = req.params;
+
+    const courseFound = await getCourseWithStudents(id);
+    const student = courseFound
+        .students
+        .reduce((curr, next) => {
+            return curr.score > next.score ? curr : next;
+        })
+        .student;
+
+    res.status(200).json(student);
 }

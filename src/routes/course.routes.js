@@ -12,5 +12,6 @@ router.post("/:id/students",courseController.addStudent);
 router.delete("/:id/students/:studentId",courseController.removeStudent);
 
 router.get("/:id/students",courseController.getStudents);
+router.get("/:id/students/best",courseController.getBestStudent);
 
 export default router;
