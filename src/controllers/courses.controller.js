@@ -9,7 +9,13 @@ export const get = async (req, res) => {
 
 export const getById = async (req, res) => {
     const { id } = req.params;
-    var course = await (await Course.findById(id)).toObject();
+    var course = await Course.findById(id).populate(
+        {
+            path: 'students.student',
+            model: 'Student'
+        }).exec();
+
+    course = course.toObject();
 
     res.status(200).json(course)
 }
@@ -40,16 +46,8 @@ export const addStudent = async (req, res) => {
         { _id: id },
         { $push: { students: { student, score } } }
     )
-
-    await courseFound.save(
-        Course.find({ _id: id })
-            .populate(
-                {
-                    path: 'students.student',
-                    model: 'Student'
-                })
-            .exec()
-    );
+    
+    await courseFound.save();
 
     res.status(200).json(courseFound);
 }
@@ -59,7 +57,7 @@ export const removeStudent = async (req, res) => {
 
     const courseFound = await Course.findOneAndUpdate(
         { _id: id },
-        { $pull: { students:{student:studentId} } }
+        { $pull: { students: { student: studentId } } }
     )
 
     await courseFound.save();
