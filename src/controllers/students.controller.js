@@ -21,5 +21,5 @@ export const deleteById = async (req, res) => {
 
     await Student.findByIdAndDelete(id);
 
-    res.status(200).json()
+    res.status(204).json()
 }

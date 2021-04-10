@@ -9,6 +9,6 @@ router.post("/",courseController.create);
 router.delete("/:id",courseController.deleteById);
 
 router.post("/:id/students",courseController.addStudent);
-router.delete("/:id/students/:idStudent",courseController.removeStudent);
+router.delete("/:id/students/:studentId",courseController.removeStudent);
 
 export default router;

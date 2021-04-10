@@ -29,7 +29,7 @@ export const deleteById = async (req, res) => {
 
     await Course.findByIdAndDelete(id);
 
-    res.status(200).json()
+    res.status(204).json()
 }
 
 export const addStudent = async (req, res) => {
@@ -42,7 +42,7 @@ export const addStudent = async (req, res) => {
     )
 
     await courseFound.save(
-        Course.find({})
+        Course.find({ _id: id })
             .populate(
                 {
                     path: 'students.student',
@@ -55,11 +55,14 @@ export const addStudent = async (req, res) => {
 }
 
 export const removeStudent = async (req, res) => {
-    const { theme, year, duration } = req.body;
+    const { id, studentId } = req.params;
 
-    const newCourse = new Course({ theme, year, duration })
+    const courseFound = await Course.findOneAndUpdate(
+        { _id: id },
+        { $pull: { students:{student:studentId} } }
+    )
 
-    await newCourse.save();
+    await courseFound.save();
 
-    res.status(201).json(newCourse);
+    res.status(204).json(courseFound);
 }
