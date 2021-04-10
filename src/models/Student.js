@@ -5,16 +5,7 @@ const studentSchema = new Schema(
         fname: String,
         lname: String,
         dni: Number,
-        address: String,
-        participations: [
-            {
-                course: {
-                    type: Schema.Types.ObjectId,
-                    ref: 'Course',
-                },
-                score: Number
-            }
-        ]
+        address: String
     },
     {
         timestamps: true,

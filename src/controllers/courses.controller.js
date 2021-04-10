@@ -11,13 +11,6 @@ export const getById = async (req, res) => {
     const { id } = req.params;
     var course = await (await Course.findById(id)).toObject();
 
-    const students = await getWithCourse(id);
-
-    course = {
-        ...course,
-        students
-    }
-
     res.status(200).json(course)
 }
 

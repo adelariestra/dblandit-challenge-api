@@ -4,7 +4,16 @@ const courseSchema = new Schema(
     {
         theme: String,
         year: Number,
-        duration: Number
+        duration: Number,
+        students: [
+            {
+                student: {
+                    type: Schema.Types.ObjectId,
+                    ref: 'Student',
+                },
+                score: Number
+            }
+        ]
     },
     {
         timestamps: true,

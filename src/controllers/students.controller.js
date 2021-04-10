@@ -23,13 +23,3 @@ export const deleteById = async (req, res) => {
 
     res.status(200).json()
 }
-
-export const getWithCourse = async (id) => {
-    const students = await Student.find()
-        .$where(function(){
-            return false
-            // return this.participations? this.participations.course === id : false;
-        });
-
-    return students;
-}
