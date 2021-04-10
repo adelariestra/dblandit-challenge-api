@@ -9,11 +9,11 @@ export const get = async (req, res) => {
 
 export const getById = async (req, res) => {
     const { id } = req.params;
-    var course = await Course.findById(id).populate(
-        {
-            path: 'students.student',
-            model: 'Student'
-        }).exec();
+    var course = await Course
+        .findById(id)
+        .select('theme year duration students')
+        .populate('students.student'
+                ,'fname lname dni address').exec();
 
     course = course.toObject();
 
@@ -46,7 +46,7 @@ export const addStudent = async (req, res) => {
         { _id: id },
         { $push: { students: { student, score } } }
     )
-    
+
     await courseFound.save();
 
     res.status(200).json(courseFound);
