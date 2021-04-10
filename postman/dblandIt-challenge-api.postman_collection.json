@@ -68,6 +68,287 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:4000/students/6070a57ee7fb38467c4e1150",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"students",
+								"6070a57ee7fb38467c4e1150"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Courses",
+			"item": [
+				{
+					"name": "get",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:4000/courses",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"courses"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get detailed",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:4000/courses",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"courses"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get students",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:4000/courses",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"courses"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get best student",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:4000/courses/60709f01b97d0e4924c4b73a/students/best",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"courses",
+								"60709f01b97d0e4924c4b73a",
+								"students",
+								"best"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get with duration",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:4000/courses?duration=90",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"courses"
+							],
+							"query": [
+								{
+									"key": "duration",
+									"value": "90"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get with year",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:4000/courses?year=2020",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"courses"
+							],
+							"query": [
+								{
+									"key": "year",
+									"value": "2020"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get with year and duration",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:4000/courses?duration=100&year=2021",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"courses"
+							],
+							"query": [
+								{
+									"key": "duration",
+									"value": "100"
+								},
+								{
+									"key": "year",
+									"value": "2021"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"theme\":\"Matematica\",\r\n    \"year\":2020,\r\n    \"duration\":100\r\n}"
+						},
+						"url": {
+							"raw": "localhost:4000/courses",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"courses"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:4000/courses/60709e9e9f623a1fa0be8417",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"courses",
+								"60709e9e9f623a1fa0be8417"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "add student",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"student\":\"6070689f4acd8a40f0da7dd8\",\r\n    \"score\":8\r\n}"
+						},
+						"url": {
+							"raw": "localhost:4000/courses/60709f01b97d0e4924c4b73a/students",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"courses",
+								"60709f01b97d0e4924c4b73a",
+								"students"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "remove student",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:4000/courses/60709e9e9f623a1fa0be8417",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"courses",
+								"60709e9e9f623a1fa0be8417"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		}
