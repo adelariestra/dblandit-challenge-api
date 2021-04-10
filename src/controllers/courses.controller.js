@@ -13,7 +13,7 @@ export const getById = async (req, res) => {
         .findById(id)
         .select('theme year duration students')
         .populate('students.student'
-                ,'fname lname dni address').exec();
+            , 'fname lname dni address').exec();
 
     course = course.toObject();
 
@@ -63,4 +63,20 @@ export const removeStudent = async (req, res) => {
     await courseFound.save();
 
     res.status(204).json(courseFound);
+}
+export const getStudents = async (req, res) => {
+    const { id } = req.params;
+
+    const courseFound = await Course
+        .findById(id)
+        .populate('students.student', 'fname lname dni address')
+        .exec();
+
+    const students = courseFound.toObject()
+        .students
+        .map(student => student.student);
+
+    console.log(students);
+
+    res.status(200).json(students);
 }
