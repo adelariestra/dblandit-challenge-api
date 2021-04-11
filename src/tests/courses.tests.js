@@ -9,7 +9,7 @@ import Course from '../models/Course';
 import data from './fixture.json'
 
 
-describe('Courses', () => {
+describe('Basic Course Operations', () => {
     beforeEach((done) => {
         Course.remove({}, (err) => {
             done();
@@ -56,25 +56,33 @@ describe('Courses', () => {
         expect(res.body.length).to.eql(0);
     });
 
-    it('should get a course detail with students', async () => {
-        const course = new Course(data.testCourseTwoStudents);
-        course.save();
-
-        const res = await request(app)
-            .get('/courses/'+course.id)
-
-        expect(res.statusCode).to.eql(200);
-        expect(res.body.students.length).to.eql(2);
-    });
-
     it('should return not found when invalid course', async () => {
         const course = new Course(data.testCourseNoStudents);
         course.save();
 
         const res = await request(app)
-            .get('/courses/'+'nnnn')
+            .get('/courses/' + 'nnnn')
 
         expect(res.statusCode).to.eql(404);
+    });
+});
+
+describe('Detailed Courses', () => {
+    beforeEach((done) => {
+        Course.remove({}, (err) => {
+            done();
+        });
+    });
+
+    it('should get a course detail with students', async () => {
+        const course = new Course(data.testCourseTwoStudents);
+        course.save();
+
+        const res = await request(app)
+            .get('/courses/' + course.id)
+
+        expect(res.statusCode).to.eql(200);
+        expect(res.body.students.length).to.eql(2);
     });
 
     it('should get a course detail even with empty students', async () => {
@@ -82,18 +90,25 @@ describe('Courses', () => {
         course.save();
 
         const res = await request(app)
-            .get('/courses/'+course.id)
+            .get('/courses/' + course.id)
 
         expect(res.statusCode).to.eql(200);
         expect(res.body.students.length).to.eql(0);
     });
+});
 
+describe('Course Students', () => {
+    beforeEach((done) => {
+        Course.remove({}, (err) => {
+            done();
+        });
+    });
     it('should get only the course students', async () => {
         const course = new Course(data.testCourseTwoStudents);
         course.save();
 
         const res = await request(app)
-            .get('/courses/'+course.id+'/students')
+            .get('/courses/' + course.id + '/students')
 
         expect(res.statusCode).to.eql(200);
         expect(res.body.length).to.eql(2);
@@ -104,19 +119,46 @@ describe('Courses', () => {
         course.save();
 
         const res = await request(app)
-            .get('/courses/'+course.id+'/students')
+            .get('/courses/' + course.id + '/students')
 
         expect(res.statusCode).to.eql(200);
-        expect(res.body.length).to.eql(2);
+        expect(res.body.length).to.eql(0);
+    });
+});
+
+describe('Course best student', () => {
+    beforeEach((done) => {
+        Course.remove({}, (err) => {
+            done();
+        });
     });
 
     it('should get the best student', async () => {
+
     });
 
     it('should get the best student even with empty students', async () => {
+
     });
 
     it('should get the best student even with only one student', async () => {
+
+    });
+});
+
+describe('Course students addition and removal', () => {
+    beforeEach((done) => {
+        Course.remove({}, (err) => {
+            done();
+        });
+    });
+
+    it('should get able to add students to course', async () => {
+
+    });
+
+    it('should get able to delete students from course', async () => {
+
     });
 
 })

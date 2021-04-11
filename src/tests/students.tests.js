@@ -35,7 +35,14 @@ describe('Students', () => {
   })
 
   it('should return not found when invalid student', async () => {
+    const student = new Student(data.testStudent);
+    await student.save();
+
+    const res = await request(app)
+      .delete('/students/' + 'nnnn')
+
+    expect(res.statusCode).to.eql(404);
   });
-  
+
 })
 
