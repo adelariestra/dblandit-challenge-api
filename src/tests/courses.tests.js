@@ -136,11 +136,11 @@ describe('Course best student', () => {
         });
     });
 
-    it.skip('should get the best student', async () => {
+    it('should get the best student', async () => {
         const student = new Student(data.testStudent);
         await student.save();
         const student2 = new Student(data.testStudent2);
-        await student.save();
+        await student2.save();
 
         const courseObj = {
             ...data.testCourseNoStudents,
@@ -152,14 +152,14 @@ describe('Course best student', () => {
                 student: student2.id,
                 score: 10
             }
-            ]
+        ]
         }
         const course = new Course(courseObj);
         await course.save();
         
         const res = await request(app)
         .get('/courses/' + course.id + '/students/best');
-        
+                
         expect(res.statusCode).to.eql(200);
         expect(res.body._id).to.eql(student2.id);
     });
@@ -170,8 +170,6 @@ describe('Course best student', () => {
         
         const res = await request(app)
         .get('/courses/' + course.id + '/students/best');
-        
-        console.log(res.body);
         
         expect(res.statusCode).to.eql(200);
         expect(res.body).to.eql({});
