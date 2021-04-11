@@ -126,7 +126,7 @@ describe('Course Students', () => {
     });
 });
 
-describe('Course best student', () => {
+describe.skip('Course best student', () => {
     beforeEach((done) => {
         Course.remove({}, (err) => {
             done();
@@ -146,7 +146,7 @@ describe('Course best student', () => {
     });
 });
 
-describe('Course students addition and removal', () => {
+describe.skip('Course students addition and removal', () => {
     beforeEach((done) => {
         Course.remove({}, (err) => {
             done();
