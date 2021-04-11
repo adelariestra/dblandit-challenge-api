@@ -9,5 +9,32 @@
         "theme": "Matematica",
         "year": 2020,
         "duration": 100
+    },
+    "testCourseTwoStudents": {
+        "theme": "Matematica",
+        "year": 2020,
+        "duration": 100,
+        "students": [
+            {
+                "student": {
+                    "_id": "6070689f4acd8a40f0da7dd8",
+                    "fname": "Arturo",
+                    "lname": "De la Riestra",
+                    "dni": 41780699,
+                    "address": "Psherman Calle Wallaby 42 sidney"
+                },
+                "score": 9
+            },
+            {
+                "student": {
+                    "_id": "6070689f4acd8a40f0da7dd8",
+                    "fname": "Arturo",
+                    "lname": "De la Riestra",
+                    "dni": 41780699,
+                    "address": "Psherman Calle Wallaby 42 sidney"
+                },
+                "score": 9
+            }
+        ]
     }
 }

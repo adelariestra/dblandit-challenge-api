@@ -49,18 +49,47 @@ describe('Courses', () => {
     });
 
     it('should list all courses even if list is empty', async () => {
-    });
-    
-    it('should return not found when invalid course', async () => {
+        const res = await request(app)
+            .get('/courses')
+
+        expect(res.statusCode).to.eql(200);
+        expect(res.body.length).to.eql(0);
     });
 
-    it('should get a course detail', async () => {
+    it('should get a course detail with students', async () => {
+        const course = new Course(data.testCourseTwoStudents);
+        course.save();
+
+        const res = await request(app)
+            .get('/courses/'+course.id)
+
+        expect(res.statusCode).to.eql(200);
+        expect(res.body.students.length).to.eql(2);
+    });
+
+    it('should return not found when invalid course', async () => {
+        const course = new Course(data.testCourse);
+        course.save();
+
+        const res = await request(app)
+            .get('/courses/'+'nnnn')
+
+        expect(res.statusCode).to.eql(404);
     });
 
     it('should get a course detail even with empty students', async () => {
+        const course = new Course(data.testCourse);
+        course.save();
+
+        const res = await request(app)
+            .get('/courses/'+course.id)
+
+        expect(res.statusCode).to.eql(200);
+        expect(res.body.students.length).to.eql(0);
     });
 
     it('should get only the course students', async () => {
+        
     });
 
     it('should get only the course students even with empty list', async () => {
