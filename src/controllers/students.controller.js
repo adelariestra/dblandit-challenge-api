@@ -1,4 +1,5 @@
 import Student from '../models/Student'
+import handleError from '../utils/handleMongooseError'
 
 export const get = async (req, res) => {
     const students = await Student.find();
@@ -18,8 +19,11 @@ export const create = async (req, res) => {
 
 export const deleteById = async (req, res) => {
     const { id } = req.params;
+    try {
+        await Student.findByIdAndDelete(id);
 
-    await Student.findByIdAndDelete(id);
+        res.status(204).json()
+    } catch (e) { handleError(e, res); }
 
-    res.status(204).json()
 }
+

@@ -1,5 +1,5 @@
 import Course from '../models/Course'
-import mongoose from 'mongoose'
+import handleError from '../utils/handleMongooseError'
 
 export const get = async (req, res) => {
     const courses = await Course.find(req.query)
@@ -103,11 +103,4 @@ export const getBestStudent = async (req, res) => {
         res.status(200).json(student);
     } catch (e) { handleError(e, res); }
 
-}
-
-const handleError = (e, res) => {
-    if (e instanceof mongoose.Error.CastError)
-        res.status(422).json("Invalid course ID.");
-    else
-        res.status(400).json(e);
 }
