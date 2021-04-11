@@ -7,6 +7,7 @@ const expect = chai.expect;
 
 import Course from '../models/Course';
 import data from './fixture.json'
+import Student from '../models/Student';
 
 
 describe('Basic Course Operations', () => {
@@ -81,6 +82,7 @@ describe('Detailed Courses', () => {
         const res = await request(app)
             .get('/courses/' + course.id)
 
+        console.log(res.body);
         expect(res.statusCode).to.eql(200);
         expect(res.body.students.length).to.eql(2);
     });
@@ -99,7 +101,8 @@ describe('Detailed Courses', () => {
 
 describe('Course Students', () => {
     beforeEach((done) => {
-        Course.remove({}, (err) => {
+        Course.remove({});
+        Student.remove({}, (err) => {
             done();
         });
     });
@@ -128,7 +131,8 @@ describe('Course Students', () => {
 
 describe.skip('Course best student', () => {
     beforeEach((done) => {
-        Course.remove({}, (err) => {
+        Course.remove({});
+        Student.remove({}, (err) => {
             done();
         });
     });
@@ -148,7 +152,8 @@ describe.skip('Course best student', () => {
 
 describe.skip('Course students addition and removal', () => {
     beforeEach((done) => {
-        Course.remove({}, (err) => {
+        Course.remove({});
+        Student.remove({}, (err) => {
             done();
         });
     });
