@@ -41,7 +41,7 @@ describe('Students', () => {
     const res = await request(app)
       .delete('/students/' + 'nnnn')
 
-    expect(res.statusCode).to.eql(404);
+    expect(res.statusCode).to.eql(422);
   });
 
 })
