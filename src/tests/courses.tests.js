@@ -19,14 +19,14 @@ describe('Courses', () => {
     it('should create a new course', async () => {
         const res = await request(app)
             .post('/courses')
-            .send(data.testCourse);
+            .send(data.testCourseNoStudents);
 
         expect(res.statusCode).to.eql(201);
         expect(res.body).to.haveOwnProperty('_id');
     })
 
     it('should delete a created course', async () => {
-        const course = new Course(data.testCourse);
+        const course = new Course(data.testCourseNoStudents);
         await course.save();
 
         const res = await request(app)
@@ -36,8 +36,8 @@ describe('Courses', () => {
     })
 
     it('should list all courses', async () => {
-        const course = new Course(data.testCourse);
-        const course2 = new Course(data.testCourse);
+        const course = new Course(data.testCourseNoStudents);
+        const course2 = new Course(data.testCourseNoStudents);
         course.save();
         course2.save();
 
@@ -68,7 +68,7 @@ describe('Courses', () => {
     });
 
     it('should return not found when invalid course', async () => {
-        const course = new Course(data.testCourse);
+        const course = new Course(data.testCourseNoStudents);
         course.save();
 
         const res = await request(app)
@@ -78,7 +78,7 @@ describe('Courses', () => {
     });
 
     it('should get a course detail even with empty students', async () => {
-        const course = new Course(data.testCourse);
+        const course = new Course(data.testCourseNoStudents);
         course.save();
 
         const res = await request(app)
@@ -89,10 +89,25 @@ describe('Courses', () => {
     });
 
     it('should get only the course students', async () => {
-        
+        const course = new Course(data.testCourseTwoStudents);
+        course.save();
+
+        const res = await request(app)
+            .get('/courses/'+course.id+'/students')
+
+        expect(res.statusCode).to.eql(200);
+        expect(res.body.length).to.eql(2);
     });
 
     it('should get only the course students even with empty list', async () => {
+        const course = new Course(data.testCourseNoStudents);
+        course.save();
+
+        const res = await request(app)
+            .get('/courses/'+course.id+'/students')
+
+        expect(res.statusCode).to.eql(200);
+        expect(res.body.length).to.eql(2);
     });
 
     it('should get the best student', async () => {

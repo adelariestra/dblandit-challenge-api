@@ -5,7 +5,7 @@
         "dni": 41780699,
         "address": "P. Sherman, Calle Wallaby 42, Sydney"
     },
-    "testCourse": {
+    "testCourseNoStudents": {
         "theme": "Matematica",
         "year": 2020,
         "duration": 100
@@ -33,7 +33,7 @@
                     "dni": 41780699,
                     "address": "Psherman Calle Wallaby 42 sidney"
                 },
-                "score": 9
+                "score": 10
             }
         ]
     }
