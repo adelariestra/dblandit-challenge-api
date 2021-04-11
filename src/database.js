@@ -1,8 +1,6 @@
 import mongoose from 'mongoose'
 import config from './config/config.json'
 
-console.log(process.env.NODE_ENV);
-
 const db_uri = process.env.NODE_ENV.trim() === 'dev' ? config.DB_DEV_URI : config.DB_TEST_URI; 
 
 mongoose.connect(db_uri, {

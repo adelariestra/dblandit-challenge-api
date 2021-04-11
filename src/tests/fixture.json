@@ -1,0 +1,13 @@
+{
+    "testStudent": {
+        "fname": "Arturo Hector",
+        "lname": "De la Riestra",
+        "dni": 41780699,
+        "address": "P. Sherman, Calle Wallaby 42, Sydney"
+    },
+    "testCourse": {
+        "theme": "Matematica",
+        "year": 2020,
+        "duration": 100
+    }
+}
