@@ -150,7 +150,7 @@ describe.skip('Course best student', () => {
     });
 });
 
-describe.skip('Course students addition and removal', () => {
+describe('Course students addition and removal', () => {
     beforeEach((done) => {
         Course.remove({});
         Student.remove({}, (err) => {
@@ -158,12 +158,51 @@ describe.skip('Course students addition and removal', () => {
         });
     });
 
-    it('should get able to add students to course', async () => {
+    it('should be able to add students to course', async () => {
+        const course = new Course(data.testCourseNoStudents);
+        course.save();
+
+        const student = new Student(data.testStudent);
+        await student.save();
+
+        const res = await request(app)
+            .post('/courses/' + course.id + '/students')
+            .send({
+                student: student.id,
+                score: 10
+            });
+
+
+        expect(res.statusCode).to.eql(200);
+        expect(res.body.students.length).to.eql(1);
+
 
     });
 
-    it('should get able to delete students from course', async () => {
+    it('should be able to delete students from course', async () => {
+        const student = new Student(data.testStudent);
+        await student.save();
 
+        const courseObj = {
+            ...data.testCourseNoStudents,
+            students: [{
+                student: student.id,
+                score: 10
+            }]
+        }
+        const course = new Course(courseObj);
+        await course.save();
+
+        expect(course.students.length).to.eql(1);
+
+        const res = await request(app)
+            .delete('/courses/' + course.id + '/students/' + student.id)
+            .send({
+                student: student.id,
+                score: 10
+            });
+
+        expect(res.statusCode).to.eql(204);
     });
 
 })

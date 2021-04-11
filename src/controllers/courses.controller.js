@@ -40,9 +40,10 @@ export const addStudent = async (req, res) => {
     const { student, score } = req.body;
 
     try {
-        const courseFound = await Course.findOneAndUpdate(
+        var courseFound = await Course.findOneAndUpdate(
             { _id: id },
-            { $push: { students: { student, score } } }
+            { $push: { students: { student, score } } },
+            {new: true}
         )
 
         await courseFound.save();
@@ -56,7 +57,8 @@ export const removeStudent = async (req, res) => {
     try {
         const courseFound = await Course.findOneAndUpdate(
             { _id: id },
-            { $pull: { students: { student: studentId } } }
+            { $pull: { students: { student: studentId } } },
+            {new: true}
         )
 
         await courseFound.save();
