@@ -18,9 +18,9 @@ export const getById = async (req, res) => {
 }
 
 export const create = async (req, res) => {
-    const { theme, year, duration } = req.body;
+    const { theme, year, duration, students } = req.body;
 
-    const newCourse = new Course({ theme, year, duration })
+    const newCourse = new Course({ theme, year, duration, students })
 
     await newCourse.save();
 
@@ -43,7 +43,7 @@ export const addStudent = async (req, res) => {
         var courseFound = await Course.findOneAndUpdate(
             { _id: id },
             { $push: { students: { student, score } } },
-            {new: true}
+            { new: true }
         )
 
         await courseFound.save();
@@ -58,7 +58,7 @@ export const removeStudent = async (req, res) => {
         const courseFound = await Course.findOneAndUpdate(
             { _id: id },
             { $pull: { students: { student: studentId } } },
-            {new: true}
+            { new: true }
         )
 
         await courseFound.save();
@@ -95,14 +95,17 @@ export const getBestStudent = async (req, res) => {
     const { id } = req.params;
     try {
         const courseFound = await getCourseWithStudents(id);
-        const student = courseFound
-            .students
-            .reduce((curr, next) => {
-                return curr.score > next.score ? curr : next;
-            })
-            .student;
+        const students = courseFound.students
 
-        res.status(200).json(student);
+        if (students.length == 0)
+            res.status(200).json({});
+        else {
+            const student = students.reduce((curr, next) => {
+                return curr.score > next.score ? curr : next;
+            }).student;
+
+            res.status(200).json(student);
+        }
     } catch (e) { handleError(e, res); }
 
 }

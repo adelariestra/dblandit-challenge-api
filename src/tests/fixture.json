@@ -5,6 +5,12 @@
         "dni": 41780699,
         "address": "P. Sherman, Calle Wallaby 42, Sydney"
     },
+    "testStudent2": {
+        "fname": "Arturo",
+        "lname": "Dangelo",
+        "dni": 41780009,
+        "address": "P. Sherman, Calle Wallaby 42, Sydney"
+    },
     "testCourseNoStudents": {
         "theme": "Matematica",
         "year": 2020,

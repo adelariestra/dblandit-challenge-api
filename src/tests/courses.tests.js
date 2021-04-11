@@ -82,7 +82,6 @@ describe('Detailed Courses', () => {
         const res = await request(app)
             .get('/courses/' + course.id)
 
-        console.log(res.body);
         expect(res.statusCode).to.eql(200);
         expect(res.body.students.length).to.eql(2);
     });
@@ -129,7 +128,7 @@ describe('Course Students', () => {
     });
 });
 
-describe.skip('Course best student', () => {
+describe('Course best student', () => {
     beforeEach((done) => {
         Course.remove({});
         Student.remove({}, (err) => {
@@ -137,16 +136,66 @@ describe.skip('Course best student', () => {
         });
     });
 
-    it('should get the best student', async () => {
+    it.skip('should get the best student', async () => {
+        const student = new Student(data.testStudent);
+        await student.save();
+        const student2 = new Student(data.testStudent2);
+        await student.save();
 
+        const courseObj = {
+            ...data.testCourseNoStudents,
+            students: [{
+                student: student.id,
+                score: 9
+            },
+            {
+                student: student2.id,
+                score: 10
+            }
+            ]
+        }
+        const course = new Course(courseObj);
+        await course.save();
+        
+        const res = await request(app)
+        .get('/courses/' + course.id + '/students/best');
+        
+        expect(res.statusCode).to.eql(200);
+        expect(res.body._id).to.eql(student2.id);
     });
 
     it('should get the best student even with empty students', async () => {
-
+        const course = new Course(data.testCourseNoStudents);
+        await course.save();
+        
+        const res = await request(app)
+        .get('/courses/' + course.id + '/students/best');
+        
+        console.log(res.body);
+        
+        expect(res.statusCode).to.eql(200);
+        expect(res.body).to.eql({});
     });
 
     it('should get the best student even with only one student', async () => {
+        const student = new Student(data.testStudent);
+        await student.save();
 
+        const courseObj = {
+            ...data.testCourseNoStudents,
+            students: [{
+                student: student.id,
+                score: 9
+            }]
+        }
+        const course = new Course(courseObj);
+        await course.save();
+        
+        const res = await request(app)
+        .get('/courses/' + course.id + '/students/best');
+                
+        expect(res.statusCode).to.eql(200);
+        expect(res.body._id).to.eql(student.id);
     });
 });
 
