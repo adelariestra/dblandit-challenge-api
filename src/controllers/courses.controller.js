@@ -1,4 +1,5 @@
 import Course from '../models/Course'
+import mongoose from 'mongoose'
 
 export const get = async (req, res) => {
     const courses = await Course.find(req.query)
@@ -8,10 +9,12 @@ export const get = async (req, res) => {
 }
 
 export const getById = async (req, res) => {
-    const { id } = req.params;
-    var course = await getCourseWithStudents(id);
+    try {
+        const { id } = req.params;
+        var course = await getCourseWithStudents(id);
 
-    res.status(200).json(course)
+        res.status(200).json(course)
+    } catch (e) { handleError(e, res); }
 }
 
 export const create = async (req, res) => {
@@ -26,51 +29,55 @@ export const create = async (req, res) => {
 
 export const deleteById = async (req, res) => {
     const { id } = req.params;
-
-    await Course.findByIdAndDelete(id);
-
-    res.status(204).json()
+    try {
+        await Course.findByIdAndDelete(id);
+        res.status(204).json()
+    } catch (e) { handleError(e, res); }
 }
 
 export const addStudent = async (req, res) => {
     const { id } = req.params;
     const { student, score } = req.body;
 
-    const courseFound = await Course.findOneAndUpdate(
-        { _id: id },
-        { $push: { students: { student, score } } }
-    )
+    try {
+        const courseFound = await Course.findOneAndUpdate(
+            { _id: id },
+            { $push: { students: { student, score } } }
+        )
 
-    await courseFound.save();
+        await courseFound.save();
 
-    res.status(200).json(courseFound);
+        res.status(200).json(courseFound);
+    } catch (e) { handleError(e, res); }
 }
 
 export const removeStudent = async (req, res) => {
     const { id, studentId } = req.params;
+    try {
+        const courseFound = await Course.findOneAndUpdate(
+            { _id: id },
+            { $pull: { students: { student: studentId } } }
+        )
 
-    const courseFound = await Course.findOneAndUpdate(
-        { _id: id },
-        { $pull: { students: { student: studentId } } }
-    )
+        await courseFound.save();
 
-    await courseFound.save();
+        res.status(204).json(courseFound);
+    } catch (e) { handleError(e, res); }
 
-    res.status(204).json(courseFound);
 }
 
 export const getStudents = async (req, res) => {
     const { id } = req.params;
 
-    const courseFound = await getCourseWithStudents(id);
+    try {
+        const courseFound = await getCourseWithStudents(id);
 
-    const students = courseFound
-        .students
-        .map(student => student.student);
+        const students = courseFound
+            .students
+            .map(student => student.student);
 
-    console.log(students);
-
-    res.status(200).json(students);
+        res.status(200).json(students);
+    } catch (e) { handleError(e, res); }
 }
 
 const getCourseWithStudents = async (id) => {
@@ -84,14 +91,23 @@ const getCourseWithStudents = async (id) => {
 
 export const getBestStudent = async (req, res) => {
     const { id } = req.params;
+    try {
+        const courseFound = await getCourseWithStudents(id);
+        const student = courseFound
+            .students
+            .reduce((curr, next) => {
+                return curr.score > next.score ? curr : next;
+            })
+            .student;
 
-    const courseFound = await getCourseWithStudents(id);
-    const student = courseFound
-        .students
-        .reduce((curr, next) => {
-            return curr.score > next.score ? curr : next;
-        })
-        .student;
+        res.status(200).json(student);
+    } catch (e) { handleError(e, res); }
 
-    res.status(200).json(student);
+}
+
+const handleError = (e, res) => {
+    if (e instanceof mongoose.Error.CastError)
+        res.status(422).json("Invalid course ID.");
+    else
+        res.status(400).json(e);
 }
