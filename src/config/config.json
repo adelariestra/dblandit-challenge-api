@@ -1,4 +1,5 @@
 {
     "DB_DEV_URI": "mongodb://localhost/dblanditdb",
-    "DB_TEST_URI": "mongodb://localhost/dblanditdb_test"
+    "DB_TEST_URI": "mongodb://localhost/dblanditdb_test",
+    "ORIGIN_ALLOWED": "http://localhost:3000"
 }
