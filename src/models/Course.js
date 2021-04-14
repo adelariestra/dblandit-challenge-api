@@ -5,8 +5,12 @@ var participationSubSchema = new Schema(
         student: {
             type: Schema.Types.ObjectId,
             ref: 'Student',
+            required: true
         },
-        score: Number,
+        score: {
+            type: Number,
+            required: true
+        }
 
     }, { _id: false }
 
@@ -14,9 +18,18 @@ var participationSubSchema = new Schema(
 
 const courseSchema = new Schema(
     {
-        theme: String,
-        year: Number,
-        duration: Number,
+        theme: {
+            type: String,
+            required: true
+        },
+        year: {
+            type: Number,
+            required: true
+        },
+        duration: {
+            type: Number,
+            required: true
+        },
         students: [participationSubSchema]
     },
     {
