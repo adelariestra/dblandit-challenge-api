@@ -4,6 +4,7 @@ import cors from 'cors'
 
 import pkg from '../package.json'
 import {ORIGIN_ALLOWED} from './config/config.json'
+import initialSetup from './utils/initialSetup'
 
 import studentRoutes from './routes/student.routes'
 import courseRoutes from './routes/course.routes'
@@ -14,6 +15,7 @@ const app = express();
 // Config
 app.set("pkg", pkg);
 app.set("port", process.env.PORT || 4000);
+initialSetup();
 
 // Middlewares
 app.use(cors({origin:ORIGIN_ALLOWED}))
