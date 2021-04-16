@@ -1,7 +1,9 @@
 import app from '../app'
 import '../database'
 
-import request from 'supertest';
+import supertest from 'supertest'
+var defaults = require('superagent-defaults');
+
 import chai from 'chai';
 const expect = chai.expect;
 
@@ -9,16 +11,23 @@ import Course from '../models/Course';
 import data from './fixture.json'
 import Student from '../models/Student';
 
+import { PSW_SEED } from '../config/config.json'
+import jwt from "jsonwebtoken";
+
+// Set header to all req
+var request = defaults(supertest(app))
+const token = jwt.sign("607a18fd70bf863704c490b3", PSW_SEED);
+request.set({"x-access-token": token})
 
 describe('Basic Course Operations', () => {
-    beforeEach((done) => {
+    beforeEach((done) => {     
         Course.remove({}, (err) => {
             done();
         });
     });
 
     it('should create a new course', async () => {
-        const res = await request(app)
+        const res = await request
             .post('/courses')
             .send(data.testCourseNoStudents);
 
@@ -30,7 +39,7 @@ describe('Basic Course Operations', () => {
         const course = new Course(data.testCourseNoStudents);
         await course.save();
 
-        const res = await request(app)
+        const res = await request
             .delete('/courses/' + course.id)
 
         expect(res.statusCode).to.eql(204);
@@ -42,7 +51,7 @@ describe('Basic Course Operations', () => {
         course.save();
         course2.save();
 
-        const res = await request(app)
+        const res = await request
             .get('/courses')
 
         expect(res.statusCode).to.eql(200);
@@ -50,7 +59,7 @@ describe('Basic Course Operations', () => {
     });
 
     it('should list all courses even if list is empty', async () => {
-        const res = await request(app)
+        const res = await request
             .get('/courses')
 
         expect(res.statusCode).to.eql(200);
@@ -61,7 +70,7 @@ describe('Basic Course Operations', () => {
         const course = new Course(data.testCourseNoStudents);
         course.save();
 
-        const res = await request(app)
+        const res = await request
             .get('/courses/' + 'nnnn')
 
         expect(res.statusCode).to.eql(422);
@@ -79,7 +88,7 @@ describe('Detailed Courses', () => {
         const course = new Course(data.testCourseTwoStudents);
         course.save();
 
-        const res = await request(app)
+        const res = await request
             .get('/courses/' + course.id)
 
         expect(res.statusCode).to.eql(200);
@@ -90,7 +99,7 @@ describe('Detailed Courses', () => {
         const course = new Course(data.testCourseNoStudents);
         course.save();
 
-        const res = await request(app)
+        const res = await request
             .get('/courses/' + course.id)
 
         expect(res.statusCode).to.eql(200);
@@ -109,7 +118,7 @@ describe('Course Students', () => {
         const course = new Course(data.testCourseTwoStudents);
         course.save();
 
-        const res = await request(app)
+        const res = await request
             .get('/courses/' + course.id + '/students')
 
         expect(res.statusCode).to.eql(200);
@@ -120,7 +129,7 @@ describe('Course Students', () => {
         const course = new Course(data.testCourseNoStudents);
         course.save();
 
-        const res = await request(app)
+        const res = await request
             .get('/courses/' + course.id + '/students')
 
         expect(res.statusCode).to.eql(200);
@@ -157,7 +166,7 @@ describe('Course best student', () => {
         const course = new Course(courseObj);
         await course.save();
 
-        const res = await request(app)
+        const res = await request
             .get('/courses/' + course.id + '/students/best');
 
         expect(res.statusCode).to.eql(200);
@@ -168,7 +177,7 @@ describe('Course best student', () => {
         const course = new Course(data.testCourseNoStudents);
         await course.save();
 
-        const res = await request(app)
+        const res = await request
             .get('/courses/' + course.id + '/students/best');
 
         expect(res.statusCode).to.eql(200);
@@ -189,7 +198,7 @@ describe('Course best student', () => {
         const course = new Course(courseObj);
         await course.save();
 
-        const res = await request(app)
+        const res = await request
             .get('/courses/' + course.id + '/students/best');
 
         expect(res.statusCode).to.eql(200);
@@ -212,7 +221,7 @@ describe('Course students addition and removal', () => {
         const student = new Student(data.testStudent);
         await student.save();
 
-        const res = await request(app)
+        const res = await request
             .post('/courses/' + course.id + '/students')
             .send({
                 student: student.id,
@@ -231,14 +240,14 @@ describe('Course students addition and removal', () => {
         const student = new Student(data.testStudent);
         await student.save();
 
-        var res = await request(app)
+        var res = await request
             .post('/courses/' + course.id + '/students')
             .send({
                 student: student.id,
                 score: 10
             });
 
-        res = await request(app)
+        res = await request
             .post('/courses/' + course.id + '/students')
             .send({
                 student: student.id,
@@ -264,7 +273,7 @@ describe('Course students addition and removal', () => {
 
         expect(course.students.length).to.eql(1);
 
-        const res = await request(app)
+        const res = await request
             .delete('/courses/' + course.id + '/students/' + student.id)
             .send({
                 student: student.id,

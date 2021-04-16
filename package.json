@@ -38,6 +38,7 @@
     "@babel/register": "^7.13.14",
     "chai": "^4.3.4",
     "nodemon": "^2.0.7",
+    "superagent-defaults": "^0.1.14",
     "supertest": "^6.1.3"
   }
 }
