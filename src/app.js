@@ -34,5 +34,6 @@ app.get('/', (req,res)=>{
 
 app.use("/students", studentRoutes);
 app.use("/courses", courseRoutes);
+app.use("/auth", authRoutes);
 
 export default app;
