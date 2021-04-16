@@ -21,10 +21,3 @@ export const login = async (req, res) => {
         res.status(200).json({token:token});
     } catch (e) { handleError(e, res); }
 }
-
-export const logout = async (req, res) => {
-    console.log(req.body);
-    // query 
-
-    // res.status(200).json(...)
-}

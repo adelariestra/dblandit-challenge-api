@@ -28,7 +28,6 @@ describe('Basic user auth', () => {
             .send(data.user);
 
         expect(res.statusCode).to.eql(200);
-        // expect(res.body.token).to.not.be.null;
     })
 
 });
