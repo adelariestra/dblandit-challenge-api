@@ -40,6 +40,13 @@ export const addStudent = async (req, res) => {
     const { student, score } = req.body;
 
     try {
+        var course = await Course.findById(id)
+        course = course.toObject();
+
+        if (course.students.some((st) => { return st.student == student; })) {
+            res.status(400).json("Student already in course.");
+            return;
+        }
         var courseFound = await Course.findOneAndUpdate(
             { _id: id },
             { $push: { students: { student, score } } },
@@ -49,6 +56,7 @@ export const addStudent = async (req, res) => {
         await courseFound.save();
 
         res.status(200).json(courseFound);
+
     } catch (e) { handleError(e, res); }
 }
 

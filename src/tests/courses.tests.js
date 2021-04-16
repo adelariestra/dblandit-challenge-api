@@ -246,7 +246,6 @@ describe('Course students addition and removal', () => {
             });
 
         expect(res.statusCode).not.to.eql(200);
-        expect(res.body.students.length).to.eql(1);
     });
 
     it('should be able to delete students from course', async () => {
