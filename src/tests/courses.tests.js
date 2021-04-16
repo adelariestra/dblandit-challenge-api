@@ -152,14 +152,14 @@ describe('Course best student', () => {
                 student: student2.id,
                 score: 10
             }
-        ]
+            ]
         }
         const course = new Course(courseObj);
         await course.save();
-        
+
         const res = await request(app)
-        .get('/courses/' + course.id + '/students/best');
-                
+            .get('/courses/' + course.id + '/students/best');
+
         expect(res.statusCode).to.eql(200);
         expect(res.body._id).to.eql(student2.id);
     });
@@ -167,10 +167,10 @@ describe('Course best student', () => {
     it('should get the best student even with empty students', async () => {
         const course = new Course(data.testCourseNoStudents);
         await course.save();
-        
+
         const res = await request(app)
-        .get('/courses/' + course.id + '/students/best');
-        
+            .get('/courses/' + course.id + '/students/best');
+
         expect(res.statusCode).to.eql(200);
         expect(res.body).to.eql({});
     });
@@ -188,10 +188,10 @@ describe('Course best student', () => {
         }
         const course = new Course(courseObj);
         await course.save();
-        
+
         const res = await request(app)
-        .get('/courses/' + course.id + '/students/best');
-                
+            .get('/courses/' + course.id + '/students/best');
+
         expect(res.statusCode).to.eql(200);
         expect(res.body._id).to.eql(student.id);
     });
@@ -222,8 +222,31 @@ describe('Course students addition and removal', () => {
 
         expect(res.statusCode).to.eql(200);
         expect(res.body.students.length).to.eql(1);
+    });
 
+    it('should not be able to add a student twice', async () => {
+        const course = new Course(data.testCourseNoStudents);
+        course.save();
 
+        const student = new Student(data.testStudent);
+        await student.save();
+
+        var res = await request(app)
+            .post('/courses/' + course.id + '/students')
+            .send({
+                student: student.id,
+                score: 10
+            });
+
+        res = await request(app)
+            .post('/courses/' + course.id + '/students')
+            .send({
+                student: student.id,
+                score: 9
+            });
+
+        expect(res.statusCode).not.to.eql(200);
+        expect(res.body.students.length).to.eql(1);
     });
 
     it('should be able to delete students from course', async () => {
