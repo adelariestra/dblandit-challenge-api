@@ -7,6 +7,7 @@ import {ORIGIN_ALLOWED} from './config/config.json'
 
 import studentRoutes from './routes/student.routes'
 import courseRoutes from './routes/course.routes'
+import authRoutes from "./routes/auth.routes";
 
 const app = express();
 
