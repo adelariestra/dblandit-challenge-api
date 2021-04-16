@@ -5,6 +5,10 @@
         "dni": 41780699,
         "address": "P. Sherman, Calle Wallaby 42, Sydney"
     },
+    "user": {
+        "username": "user",
+        "password": "password"
+    },
     "testStudent2": {
         "fname": "Arturo",
         "lname": "Dangelo",

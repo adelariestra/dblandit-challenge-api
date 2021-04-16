@@ -2,5 +2,6 @@
     "DB_DEV_URI": "mongodb://localhost/dblanditdb",
     "DB_TEST_URI": "mongodb://localhost/dblanditdb_test",
     "ORIGIN_ALLOWED": "http://localhost:3000",
-    "PSW_SEED":"dblandit"
+    "PSW_SEED":"dblandit",
+    "SESSION_DURATION":6000
 }
