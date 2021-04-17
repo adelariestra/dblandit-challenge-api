@@ -1,6 +1,14 @@
 import Course from '../models/Course'
 import handleError from '../utils/handleMongooseError'
 
+const fillCourseWithStudents = async (id) => {
+    const course = await Course.findById(id)
+        .populate('students.student', 'fname lname dni address')
+        .exec();
+
+    return course.toObject();
+}
+
 export const get = async (req, res) => {
     const courses = await Course.find(req.query)
         .select('theme year');
@@ -11,9 +19,16 @@ export const get = async (req, res) => {
 export const getById = async (req, res) => {
     try {
         const { id } = req.params;
-        var course = await getCourseWithStudents(id);
 
-        res.status(200).json(course)
+        const course = await Course.findById(id)
+        if (!course) {
+            res.status(404).json({ message: "Course not found." })
+            return;
+        }
+
+        var courseWithStudents = await fillCourseWithStudents(id);
+
+        res.status(200).json(courseWithStudents)
     } catch (e) { handleError(e, res); }
 }
 
@@ -32,10 +47,18 @@ export const create = async (req, res) => {
 
 export const deleteById = async (req, res) => {
     const { id } = req.params;
-    try {
-        await Course.findByIdAndDelete(id);
+
+    await Course.findByIdAndDelete(id, function (err, doc) {
+        if (err) { 
+            handleError(err,res);
+            return;
+        }
+        if (!doc) {
+            res.status(404).json({message:"Course not found."})
+            return;
+        }
         res.status(204).json()
-    } catch (e) { handleError(e, res); }
+    });
 }
 
 export const addStudent = async (req, res) => {
@@ -83,9 +106,16 @@ export const getStudents = async (req, res) => {
     const { id } = req.params;
 
     try {
-        const courseFound = await getCourseWithStudents(id);
+        const course = await Course.findById(id)
 
-        const students = courseFound
+        if (!course) {
+            res.status(404).json({ message: "Course not found." })
+            return;
+        }
+
+        const courseWithStudents = await fillCourseWithStudents(id);
+
+        const students = courseWithStudents
             .students
             .map(student => student.student);
 
@@ -93,30 +123,31 @@ export const getStudents = async (req, res) => {
     } catch (e) { handleError(e, res); }
 }
 
-const getCourseWithStudents = async (id) => {
-    const course = await Course
-        .findById(id)
-        .populate('students.student', 'fname lname dni address')
-        .exec();
-
-    return course.toObject();
-}
-
 export const getBestStudent = async (req, res) => {
     const { id } = req.params;
     try {
-        const courseFound = await getCourseWithStudents(id);
-        const students = courseFound.students
+        const course = await Course.findById(id)
 
-        if (students.length == 0)
-            res.status(200).json({});
-        else {
-            const student = students.reduce((curr, next) => {
-                return curr.score > next.score ? curr : next;
-            }).student;
-
-            res.status(200).json(student);
+        if (!course) {
+            res.status(404).json({ message: "Course not found." })
+            return;
         }
+
+        const courseWithStudents = await fillCourseWithStudents(id);
+
+        const students = courseWithStudents.students
+
+        if (students.length == 0) {
+            res.status(200).json({});
+            return;
+        }
+
+        const student = students.reduce((curr, next) => {
+            return curr.score > next.score ? curr : next;
+        }).student;
+
+        res.status(200).json(student);
+
     } catch (e) { handleError(e, res); }
 
 }

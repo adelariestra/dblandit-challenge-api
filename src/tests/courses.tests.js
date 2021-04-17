@@ -57,15 +57,7 @@ describe('Basic Course Operations', () => {
         expect(res.body.length).to.eql(0);
     });
 
-    it('should return not found when invalid course', async () => {
-        const course = new Course(data.testCourseNoStudents);
-        course.save();
 
-        const res = await request(app)
-            .get('/courses/' + 'nnnn')
-
-        expect(res.statusCode).to.eql(422);
-    });
 });
 
 describe('Detailed Courses', () => {
@@ -95,6 +87,26 @@ describe('Detailed Courses', () => {
 
         expect(res.statusCode).to.eql(200);
         expect(res.body.students.length).to.eql(0);
+    });
+    
+    it('should return invalid course if invalid', async () => {
+        const course = new Course(data.testCourseNoStudents);
+        course.save();
+
+        const res = await request(app)
+            .get('/courses/' + 'nnnn')
+
+        expect(res.statusCode).to.eql(422);
+    });
+    
+    it('should return not found when course does not exist', async () => {
+        const course = new Course(data.testCourseNoStudents);
+        course.save();
+
+        const res = await request(app)
+            .get('/courses/' + '0000ffd60bbe4d3f1855c252')
+
+        expect(res.statusCode).to.eql(404);
     });
 });
 

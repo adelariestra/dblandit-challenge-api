@@ -159,56 +159,137 @@ eg body response:
 ```
 
 #### Get all Courses
-__description__
+Show all the courses.
 
-URL: ``
-Method: ``
-
-Body Example:
-```json
-
-```
+URL: `/courses`
+Method: `GET`
 
 Responses:
-``: when ...
+`200 OK`: when no courses are available
 eg body response:
 ```json
+[]
+```
+
+`200 OK`: when there are courses available
+eg body response:
+```json
+[    
+    {
+        "_id": "6070a60c40e6ae27ec606d79",
+        "theme": "ADR",
+        "year": 2020
+    },
+    {
+        "_id": "6070aff2f841ef4df877802b",
+        "theme": "ADR",
+        "year": 2021
+    },
+]
 
 ```
+
 #### Get a specific course
-__description__
+Show the data of an already existing course with its students.
 
-URL: ``
-Method: ``
-
-Body Example:
-```json
-
-```
+URL: `/courses/:id`
+Method: `GET`
 
 Responses:
-``: when ...
+`200 OK`: when course has students
 eg body response:
 ```json
-
+{
+    "_id": "6070a60c40e6ae27ec606d79",
+    "theme": "ADR",
+    "year": 2020,
+    "duration": 100,
+    "createdAt": "2021-04-09T19:07:56.969Z",
+    "updatedAt": "2021-04-16T02:23:59.446Z",
+    "students": [
+        {
+            "student": {
+                "_id": "6077104b2e418a1d34ea6ace",
+                "fname": "Marcelo",
+                "lname": "Torres",
+                "dni": 46525455,
+                "address": "Calle falsa 123"
+            },
+            "score": 6
+        },
+        {
+            "student": {
+                "_id": "6071dd410a7ca2254412a005",
+                "fname": "Arturo Hector",
+                "lname": "De la Riestra",
+                "dni": 41780699,
+                "address": "Psherman Calle Wallaby 42 sidney"
+            },
+            "score": 10
+        }
+    ]
+}
 ```
+
+`200 OK`: when course has no students
+eg body response:
+```json
+{
+    "_id": "6075ffd60bbe4d3f1855c252",
+    "theme": "Science",
+    "year": 2021,
+    "duration": 100,
+    "students": [],
+    "createdAt": "2021-04-13T20:32:22.752Z",
+    "updatedAt": "2021-04-13T20:32:22.752Z"
+}
+```
+
+`422 UNPROCESSABLE ENTITY`: when the id isn't in the correct format.
+eg body response:
+```json
+{
+    "message": "Invalid ID."
+}
+```
+
+`404 NOT FOUND`: when ...
+eg body response:
+```json
+{
+    "message": "Course not found."
+}
+```
+
 #### Delete a specific course
-__description__
+Delete an existing course.
 
-URL: ``
-Method: ``
-
-Body Example:
-```json
-
-```
+URL: `/courses/:id`
+Method: `DELETE`
 
 Responses:
-``: when ...
+`204 NO CONTENT`: when the course was found and deleted
 eg body response:
 ```json
-
+{}
 ```
+
+`404 NOT FOUND`: when the course was not found
+eg body response:
+```json
+{
+    "message": "Student not found."
+}
+```
+
+`422 UNPROCESSABLE ENTITY`: when the id isn't in the correct format.
+eg body response:
+```json
+{
+    "message": "Invalid ID."
+}
+```
+
 #### Add a student to a course
 __description__
 
@@ -261,40 +342,6 @@ eg body response:
 
 ```
 #### Get the best student
-__description__
-
-URL: ``
-Method: ``
-
-Body Example:
-```json
-
-```
-
-Responses:
-``: when ...
-eg body response:
-```json
-
-```
-#### ACTION_NAME
-__description__
-
-URL: ``
-Method: ``
-
-Body Example:
-```json
-
-```
-
-Responses:
-``: when ...
-eg body response:
-```json
-
-```
-#### ACTION_NAME
 __description__
 
 URL: ``
