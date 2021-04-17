@@ -43,6 +43,16 @@ describe('Students', () => {
 
     expect(res.statusCode).to.eql(422);
   });
+  
+  it('should return error when student not found', async () => {
+    const student = new Student(data.testStudent);
+    await student.save();
+
+    const res = await request(app)
+      .delete('/students/' + '6070788f4acdfa40f0da7dd8')
+
+    expect(res.statusCode).to.eql(404);
+  });
 
 })
 

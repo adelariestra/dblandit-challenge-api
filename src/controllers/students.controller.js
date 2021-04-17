@@ -12,18 +12,28 @@ export const create = async (req, res) => {
 
     const newStudent = new Student({ fname, lname, dni, address })
 
-    await newStudent.save();
+    try {
+        await newStudent.save();
+        res.status(201).json(newStudent);
+    } catch (e) {
+        handleError(e, res);
+    }
 
-    res.status(201).json(newStudent);
 }
 
 export const deleteById = async (req, res) => {
     const { id } = req.params;
-    try {
-        await Student.findByIdAndDelete(id);
 
+    await Student.findByIdAndDelete(id, function (err, doc) {
+        if (err) { 
+            handleError(err,res);
+            return;
+        }
+        if (!doc) {
+            res.status(404).json({message:"Student not found."})
+            return;
+        }
         res.status(204).json()
-    } catch (e) { handleError(e, res); }
-
+    });
 }
 

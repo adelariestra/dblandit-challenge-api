@@ -22,9 +22,12 @@ export const create = async (req, res) => {
 
     const newCourse = new Course({ theme, year, duration, students })
 
-    await newCourse.save();
-
-    res.status(201).json(newCourse);
+    try {
+        await newCourse.save();
+        res.status(201).json(newCourse);
+    } catch (e) {
+        handleError(e, res);
+    }
 }
 
 export const deleteById = async (req, res) => {
