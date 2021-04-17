@@ -370,36 +370,92 @@ eg body response:
 ```
 
 #### Get Students
-__description__
+Show only the students from a specific course
 
-URL: ``
-Method: ``
-
-Body Example:
-```json
-
-```
+URL: `/courses/:id/students`
+Method: `GET`
 
 Responses:
-``: when ...
+`200 OK`: when the students are correctly retreived
 eg body response:
 ```json
-
+[
+    {
+        "_id": "6077104b2e418a1d34ea6ace",
+        "fname": "Marcelo",
+        "lname": "Torres",
+        "dni": 46525455,
+        "address": "Calle falsa 123"
+    },
+    {
+        "_id": "6071dd410a7ca2254412a005",
+        "fname": "Arturo Hector",
+        "lname": "De la Riestra",
+        "dni": 41780699,
+        "address": "Psherman Calle Wallaby 42 sidney"
+    }
+]
 ```
+
+`200 OK`: when there are no students in the course 
+eg body response:
+```json
+[]
+```
+
+`404 NOT FOUND`: when the course was not found
+eg body response:
+```json
+{
+    "message": "Course not found."
+}
+```
+
+`422 UNPROCESSABLE ENTITY`: when the course's id is invalid.
+eg body response:
+```json
+{
+    "message": "Invalid ID."
+}
+```
+
 #### Get the best student
-__description__
+Show the student with the highest score from an existing course.
 
-URL: ``
-Method: ``
-
-Body Example:
-```json
-
-```
+URL: `/courses/:id/students/best`
+Method: `GET`
 
 Responses:
-``: when ...
+`200 OK`: when the best student was successfully retreived.
 eg body response:
 ```json
+{
+    "_id": "6071dd410a7ca2254412a005",
+    "fname": "Arturo",
+    "lname": "De la Riestra",
+    "dni": 41780699,
+    "address": "Psherman Calle Wallaby 42 sidney"
+}
+```
 
+`200 OK`: when there are no students in the course 
+eg body response:
+```json
+{}
+```
+
+`404 NOT FOUND`: when the course was not found
+eg body response:
+```json
+{
+    "message": "Course not found."
+}
+```
+
+`422 UNPROCESSABLE ENTITY`: when the course's id is invalid.
+eg body response:
+```json
+{
+    "message": "Invalid ID."
+}
 ```
