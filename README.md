@@ -1,6 +1,29 @@
 # DBlandIt Challenge - API
-For the available scripts go [here!](#available-scripts)
-Check the routes documentation [here!](#routes)
+To understand the **branch structure** check [here!](#branch-structure)
+
+For the **available scripts** go [here!](#available-scripts)
+
+Check the **routes documentation** [here!](#routes)
+
+## Branch Structure
+Main branches: 
+- **`dev`**: for **merging new features and bug fixes**.
+- **`main` (prev `master`)**: used only for **releases**
+
+Auxiliary branches:
+- **`feature`**: **new modules or use cases**.
+eg: `feature/support-dark-theme`
+- **`bugfix`**: to **fix** changes **rejected on a feature**.
+eg: `bugfix/more-gray-shades`
+- **`hotfix`**: **patches** or config changes. **can skip testing phase**.
+eg: `hotfix/increase-scaling-threshold`
+- **`merge`**: temporary for **resolving conflicts**.
+eg: `merge/combined-device-support`
+- **`experimental`** to test new features or **ideas**.
+eg: `experimental/dark-theme-support`
+
+> Once done, all **auxiliary branches will have `done` added as a prefix**.
+eg: `done/feature/support-dark-theme`
 
 ## Routes
 + [Student](#student)
