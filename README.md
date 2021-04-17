@@ -278,7 +278,7 @@ eg body response:
 eg body response:
 ```json
 {
-    "message": "Student not found."
+    "message": "Course not found."
 }
 ```
 
@@ -291,39 +291,84 @@ eg body response:
 ```
 
 #### Add a student to a course
-__description__
+Add an existing student to an existing course.
 
-URL: ``
-Method: ``
+URL: `/courses/:courseid/students`
+Method: `POST`
 
 Body Example:
 ```json
-
+{
+    "student":"607a0f75fbfc453af42ac091",
+    "score":6
+}
 ```
 
 Responses:
-``: when ...
+`200 OK`: when addition was successfully done
 eg body response:
 ```json
-
+{
+    "_id": "6070a60c40e6ae27ec606d79",
+    "theme": "ADR",
+    "year": 2020,
+    "duration": 100,
+    "createdAt": "2021-04-09T19:07:56.969Z",
+    "updatedAt": "2021-04-17T13:49:29.450Z",
+    "students": [
+        {
+            "student": "607a0f75fbfc453af42ac091",
+            "score": 6
+        }
+    ]
+}
 ```
+
+`409 CONFLICT`: when student was already in course
+eg body response:
+```json
+{
+    "message": "Student already in course."
+}
+```
+
+`422 UNPROCESSABLE ENTITY`: when the course's or student's id is invalid.
+eg body response:
+```json
+{
+    "message": "Invalid ID."
+}
+```
+
 #### Remove a Student from a course
-__description__
+Remove an existing student from an existing course.
 
-URL: ``
-Method: ``
-
-Body Example:
-```json
-
-```
+URL: `/courses/:courseid/students/:studentId`
+Method: `DELETE`
 
 Responses:
-``: when ...
+`204 NO CONTENT`: when the student was found and removed
 eg body response:
 ```json
-
+{}
 ```
+
+`404 NOT FOUND`: when the course was not found
+eg body response:
+```json
+{
+    "message": "Course not found."
+}
+```
+
+`422 UNPROCESSABLE ENTITY`: when the course's or student's id is invalid.
+eg body response:
+```json
+{
+    "message": "Invalid ID."
+}
+```
+
 #### Get Students
 __description__
 

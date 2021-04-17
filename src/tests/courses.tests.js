@@ -264,7 +264,7 @@ describe('Course students addition and removal', () => {
                 score: 9
             });
 
-        expect(res.statusCode).not.to.eql(200);
+        expect(res.statusCode).to.eql(409);
     });
 
     it('should be able to delete students from course', async () => {
