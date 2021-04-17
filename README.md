@@ -3,6 +3,20 @@ For the available scripts go [here!](#available-scripts)
 Check the routes documentation [here!](#routes)
 
 ## Routes
++ [Student](#student)
+    - [Create a new student](#create-a-new-student)
+    - [Get all Students](#get-all-students)
+    - [Delete a specific student](#delete-a-specific-student)
++ [Courses](#courses)
+    - [Create a new course](#create-a-new-course)
+    - [Get all Courses](#get-all-courses)
+    - [Get a specific course](#get-a-specific-course)
+    - [Delete a specific course](#delete-a-specific-course)
+    - [Add a student to a course](#add-a-student-to-a-course)
+    - [Remove a Student from a course](#remove-a-student-from-a-course)
+    - [Get Students](#get-students)
+    - [Get the best student](#get-the-best-student)
+    
 ### Student
 #### Create a new student
 Allows the creation of a new student.
