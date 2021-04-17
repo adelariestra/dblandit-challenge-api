@@ -36,6 +36,13 @@ describe('Basic Course Operations', () => {
         expect(res.statusCode).to.eql(204);
     })
 
+    it('should return invalid course if invalid', async () => {
+        const res = await request(app)
+            .delete('/courses/' + 'nnn')
+
+        expect(res.statusCode).to.eql(422);
+    });
+
     it('should list all courses', async () => {
         const course = new Course(data.testCourseNoStudents);
         const course2 = new Course(data.testCourseNoStudents);
